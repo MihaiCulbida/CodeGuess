@@ -27,21 +27,21 @@
 
     <div class="container">
         <div class="header">
-            <div class="title" data-i18n="title">NumGuess</div>
+            <div class="title" data-i18n="title">CodeGuess</div>
         </div>
 
         <div class="menu-selector active" id="menuSelector">
             <div class="mode-selector">
                 <div class="mode-btn" data-mode="3">
-                    <div class="mode-title" data-i18n="mode3title">3 digits</div>
+                    <div class="mode-title" data-i18n="mode3title">3 numbers</div>
                     <div class="mode-desc" data-i18n="mode3desc">6 attempts</div>
                 </div>
                 <div class="mode-btn" data-mode="4">
-                    <div class="mode-title" data-i18n="mode4title">4 digits</div>
+                    <div class="mode-title" data-i18n="mode4title">4 numbers</div>
                     <div class="mode-desc" data-i18n="mode4desc">10 attempts</div>
                 </div>
                 <div class="mode-btn" data-mode="5">
-                    <div class="mode-title" data-i18n="mode5title">5 digits</div>
+                    <div class="mode-title" data-i18n="mode5title">5 numbers</div>
                     <div class="mode-desc" data-i18n="mode5desc">12 attempts</div>
                 </div>
             </div>
@@ -61,7 +61,9 @@
 
             <div class="input-area">
                 <input type="text" class="code-input" id="codeInput" maxlength="3" data-i18n-placeholder="entercode">
-                <button class="submit-btn" id="submitBtn" data-i18n="submit">Submit</button>
+                <button class="submit-btn" id="submitBtn" data-i18n="submit">
+                    <img src="img/submit.png" alt="Submit">
+                </button>
             </div>
 
             <div class="guesses" id="guessesContainer"></div>
