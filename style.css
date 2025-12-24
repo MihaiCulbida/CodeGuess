@@ -237,6 +237,11 @@
             transition: all 0.2s;
         }
 
+        .submit-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
         .submit-btn:hover {
             background: #2563eb;
             transform: scale(1.02);

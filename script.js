@@ -1,6 +1,6 @@
       const translations = {
             en: {
-                title: "NumGuess",
+                title: "CodeGuess",
                 mode3title: "3 numbers",
                 mode3desc: "6 attempts",
                 mode4title: "4 numbers",
@@ -9,7 +9,6 @@
                 mode5desc: "12 attempts",
                 attempts: "Attempts",
                 maxattempts: "Max",
-                submit: "Submit",
                 entercode: "Number",
                 howtoplay: "How to Play",
                 rule1: "Guess the secret code with unique digits.",
@@ -26,7 +25,7 @@
                 duplicate: "All digits must be unique!"
             },
             ru: {
-                title: "NumGuess",
+                title: "CodeGuess",
                 mode3title: "3 цифры",
                 mode3desc: "6 попыток",
                 mode4title: "4 цифры",
@@ -35,7 +34,6 @@
                 mode5desc: "12 попыток",
                 attempts: "Попытки",
                 maxattempts: "Макс",
-                submit: "Проверить",
                 entercode: "Номер",
                 howtoplay: "Как играть",
                 rule1: "Угадайте секретный код с уникальными цифрами.",
@@ -52,7 +50,7 @@
                 duplicate: "Все цифры должны быть уникальными!"
             },
             ro: {
-                title: "NumGuess",
+                title: "CodeGuess",
                 mode3title: "3 cifre",
                 mode3desc: "6 încercări",
                 mode4title: "4 cifre",
@@ -61,7 +59,6 @@
                 mode5desc: "12 încercări",
                 attempts: "Încercări",
                 maxattempts: "Max",
-                submit: "Verifică",
                 entercode: "Numărul",
                 howtoplay: "Cum se joacă",
                 rule1: "Ghicește codul secret cu cifre unice.",
