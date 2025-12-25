@@ -817,11 +817,11 @@ body {
         height: 26px;
     }
     
-.code-input {
-    padding: 14px 10px;
-    font-size: 22px;
-    letter-spacing: 6px;
-}
+    .code-input {
+        padding: 18px 10px;
+        font-size: 22px;
+        letter-spacing: 6px;
+    }
         
     .submit-btn {
         padding: 18px 24px;
@@ -912,14 +912,14 @@ body {
         height: 24px;
     }
     
-.code-input {
-    padding: 12px 8px;
-    font-size: 20px;
-    letter-spacing: 5px;
-}
-    
+    .code-input {
+        padding: 18px 8px;
+        font-size: 20px;
+        letter-spacing: 5px;
+    }
+        
     .submit-btn {
-        padding: 14px 20px;
+        padding: 8px 20px;
         font-size: 15px;
     }
     
@@ -970,14 +970,14 @@ body {
         border: 2px solid #e8edff;
     }
     
-.code-input {
-    padding: 10px 6px;
-    font-size: 18px;
-    letter-spacing: 4px;
-}
+    .code-input {
+        padding: 18px 6px;
+        font-size: 18px;
+        letter-spacing: 4px;
+    }
 
     .submit-btn {
-        padding: 12px 16px;
+        padding: 8px 16px;
         font-size: 14px;
     }
     
