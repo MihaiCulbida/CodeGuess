@@ -421,12 +421,12 @@
         }
 
         .submit-btn {
-            padding: 18px 36px;
+            padding: 10px 28px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 16px;
-            font-size: 16px;
+            font-size: 24px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -434,8 +434,8 @@
         }
 
         .submit-btn img {
-            width: 28px;
-            height: 28px;
+            width: 40px;
+            height: 36px;
             filter: brightness(0) invert(1);
         }
 
