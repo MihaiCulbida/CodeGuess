@@ -11,18 +11,18 @@
                 maxattempts: "Max",
                 entercode: "Number",
                 howtoplay: "How to Play",
-                rule1: "Guess the secret code with unique digits.",
+                rule1: "Guess the secret code with unique numbers.",
                 rule2: "After each guess, the color shows how close you are:",
-                correct: "Correct digit, correct position",
-                present: "Correct digit, wrong position",
-                absent: "Digit not in code",
+                correct: "Correct number, correct position",
+                present: "Correct number, wrong position",
+                absent: "Number not in code",
                 close: "Close",
                 playagain: "Play Again",
                 won: "Victory!",
                 lost: "Game Over",
                 wondesc: "You guessed the code!",
                 lostdesc: "The code was:",
-                duplicate: "All digits must be unique!"
+                duplicate: "All numbers must be unique!"
             },
             ru: {
                 title: "CodeGuess",
@@ -102,12 +102,12 @@
         }
 
         function generateCode(length) {
-            const digits = [0,1,2,3,4,5,6,7,8,9];
+            const numbers = [0,1,2,3,4,5,6,7,8,9];
             const code = [];
             for (let i = 0; i < length; i++) {
-                const idx = Math.floor(Math.random() * digits.length);
-                code.push(digits[idx]);
-                digits.splice(idx, 1);
+                const idx = Math.floor(Math.random() * numbers.length);
+                code.push(numbers[idx]);
+                numbers.splice(idx, 1);
             }
             return code;
         }
@@ -133,10 +133,10 @@
             const guessArr = guess.split('').map(Number);
             const feedback = [];
 
-            guessArr.forEach((digit, idx) => {
-                if (digit === secretCode[idx]) {
+            guessArr.forEach((number, idx) => {
+                if (number === secretCode[idx]) {
                     feedback.push('correct');
-                } else if (secretCode.includes(digit)) {
+                } else if (secretCode.includes(number)) {
                     feedback.push('present');
                 } else {
                     feedback.push('absent');
@@ -150,10 +150,10 @@
             const row = document.createElement('div');
             row.className = 'guess-row';
 
-            guess.split('').forEach((digit, idx) => {
+            guess.split('').forEach((number, idx) => {
                 const cell = document.createElement('div');
                 cell.className = `guess-cell ${feedback[idx]}`;
-                cell.textContent = digit;
+                cell.textContent = number;
                 row.appendChild(cell);
             });
 
@@ -192,8 +192,8 @@
 
             if (!gameActive || guess.length !== gameMode) return;
 
-            const digits = guess.split('');
-            if (new Set(digits).size !== digits.length) {
+            const numbers = guess.split('');
+            if (new Set(numbers).size !== numbers.length) {
                 alert(translations[currentLang].duplicate);
                 return;
             }
