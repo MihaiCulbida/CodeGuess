@@ -11,13 +11,19 @@
         <img src="img/back.png" alt="Back">
     </button>
 
-    <div class="top-right-lang lang-dropdown">
-                <button class="icon-btn" id="helpBtn">
-                    <img src="img/help.png" alt="Help">
-                </button>
-        <button class="icon-btn planet-btn" id="langBtn" aria-label="Schimbă limba">
+    <div class="top-right-icons">
+        <button class="icon-btn" id="notesBtn">
+            <img src="img/notes.png" alt="Notes">
+        </button>
+
+        <button class="icon-btn" id="helpBtn">
+            <img src="img/help.png" alt="Help">
+        </button>
+
+         <button class="icon-btn planet-btn" id="langBtn" aria-label="Schimbă limba">
             <img src="img/language.png" alt="Language">
         </button>
+        
         <div class="lang-menu" id="langMenu">
             <div class="lang-option" data-lang="en">English</div>
             <div class="lang-option" data-lang="ru">Русский</div>
@@ -34,30 +40,52 @@
             <div class="mode-selector">
                 <div class="mode-btn" data-mode="3">
                     <div class="mode-title" data-i18n="mode3title">3 numbers</div>
-                    <div class="mode-desc" data-i18n="mode3desc">6 attempts</div>
                 </div>
                 <div class="mode-btn" data-mode="4">
                     <div class="mode-title" data-i18n="mode4title">4 numbers</div>
-                    <div class="mode-desc" data-i18n="mode4desc">10 attempts</div>
                 </div>
                 <div class="mode-btn" data-mode="5">
                     <div class="mode-title" data-i18n="mode5title">5 numbers</div>
-                    <div class="mode-desc" data-i18n="mode5desc">12 attempts</div>
+                </div>
+                <div class="mode-btn" data-mode="6">
+                    <div class="mode-title" data-i18n="mode6title">6 numbers</div>
                 </div>
             </div>
         </div>
 
-        <div class="game-area" id="gameArea">
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value" id="attemptsValue">0</div>
-                    <div class="stat-label" data-i18n="attempts">Attempts</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="maxAttemptsValue">6</div>
-                    <div class="stat-label" data-i18n="maxattempts">Max</div>
-                </div>
-            </div>
+        <div class="difficulty-selector" id="difficultySelector">
+           <div class="difficulty-title" data-i18n="choosedifficulty">Choose Difficulty</div>
+           <div class="difficulty-buttons">
+               <div class="difficulty-btn" data-difficulty="easy">
+                   <div class="difficulty-name" data-i18n="easy">Easy</div>
+                   <div class="difficulty-attempts"></div>
+               </div>
+               <div class="difficulty-btn" data-difficulty="medium">
+                   <div class="difficulty-name" data-i18n="medium">Medium</div>
+                   <div class="difficulty-attempts"></div>
+               </div>
+               <div class="difficulty-btn" data-difficulty="hard">
+                   <div class="difficulty-name" data-i18n="hard">Hard</div>
+                   <div class="difficulty-attempts"></div>
+               </div>
+           </div>
+       </div>
+
+<div class="game-area" id="gameArea">
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value" id="attemptsValue">0</div>
+            <div class="stat-label" data-i18n="attempts">Attempts</div>
+        </div>
+        
+        <div class="discovered-numbers" id="discoveredNumbers"></div>
+        
+        <div class="stat">
+            <div class="stat-value" id="maxAttemptsValue">6</div>
+            <div class="stat-label" data-i18n="maxattempts">Max</div>
+        </div>
+    </div>
+
 
             <div class="input-area">
                 <input type="text" class="code-input" id="codeInput" maxlength="3" data-i18n-placeholder="entercode">
@@ -78,19 +106,27 @@
             
             <div class="legend">
                 <div class="legend-item">
-                    <div class="legend-box" style="background: #10b981;">5</div>
+                    <div class="legend-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">5</div>
                     <span data-i18n="correct">Correct number, correct position</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-box" style="background: #f59e0b;">3</div>
+                    <div class="legend-box" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">3</div>
                     <span data-i18n="present">Correct number, wrong position</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-box" style="background: #6b7280;">7</div>
+                    <div class="legend-box" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);">7</div>
                     <span data-i18n="absent">Number not in code</span>
                 </div>
             </div>
             <button class="modal-close top-right" id="closeHelp" aria-label="Close">✕</button>
+        </div>
+    </div>
+
+    <div class="modal" id="notesModal">
+        <div class="modal-content">
+            <div class="modal-title" data-i18n="notes">Notes</div>
+            <textarea class="notes-textarea" id="notesTextarea" data-i18n-placeholder="notesplaceholder"></textarea>
+            <button class="modal-close top-right" id="closeNotesX" aria-label="Close">✕</button>
         </div>
     </div>
 
@@ -102,6 +138,7 @@
             <button class="modal-close" id="playAgain" data-i18n="playagain">Play Again</button>
         </div>
     </div>
+
 <script src="script.js"> </script>
 </body>
 </html>
