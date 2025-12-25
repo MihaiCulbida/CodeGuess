@@ -26,7 +26,7 @@ const translations = {
         medium: "Medium",
         hard: "Hard",
         notes: "Notes",
-        notesplaceholder: "Write your notes here...",
+        notesplaceholder: "Write..",
         attemptstext: "attempts"
     },
     ru: {
@@ -56,7 +56,7 @@ const translations = {
         medium: "Средне",
         hard: "Сложно",
         notes: "Заметки",
-        notesplaceholder: "Напишите свои заметки здесь...",
+        notesplaceholder: "Напишите..",
         attemptstext: "попыток"
     },
     ro: {
@@ -86,7 +86,7 @@ const translations = {
         medium: "Mediu",
         hard: "Dificil",
         notes: "Notițe",
-        notesplaceholder: "Scrie notițele tale aici...",
+        notesplaceholder: "Scrie..",
         attemptstext: "încercări"
     }
 };
@@ -147,23 +147,30 @@ function updateDiscoveredNumbers() {
     const container = document.getElementById('discoveredNumbers');
     container.innerHTML = '';
     
-    // Creăm un set cu toate cifrele găsite (oriunde în cod)
-    const foundNumbers = new Set([...discoveredNumbers, ...allNumbersFound]);
+    const correctNumbers = Array.from(discoveredNumbers);
+    const presentNumbers = Array.from(allNumbersFound);
+    const totalFound = correctNumbers.length + presentNumbers.length;
     
-    // Afișăm doar cifrele descoperite, fără să arătăm pozițiile lor
-    foundNumbers.forEach((number) => {
+    correctNumbers.forEach((number) => {
         const cell = document.createElement('div');
-        cell.className = 'discovered-cell';
+        cell.className = 'discovered-cell found';
         cell.textContent = number;
-        
-        if (discoveredNumbers.has(number)) {
-            cell.classList.add('found');
-        } else {
-            cell.classList.add('present');
-        }
-        
         container.appendChild(cell);
     });
+    
+    presentNumbers.forEach((number) => {
+        const cell = document.createElement('div');
+        cell.className = 'discovered-cell present';
+        cell.textContent = number;
+        container.appendChild(cell);
+    });
+    
+    for (let i = totalFound; i < gameMode; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'discovered-cell empty';
+        cell.textContent = '?';
+        container.appendChild(cell);
+    }
 }
 
 function startGame(mode, difficulty) {
@@ -203,9 +210,14 @@ function checkGuess(guess) {
         if (number === secretCode[idx]) {
             feedback.push('correct');
             discoveredNumbers.add(number);
+            // Șterge din portocalii dacă era acolo
+            allNumbersFound.delete(number);
         } else if (secretCode.includes(number)) {
             feedback.push('present');
-            allNumbersFound.add(number);
+            // Adaugă în portocalii doar dacă nu e deja în verzi
+            if (!discoveredNumbers.has(number)) {
+                allNumbersFound.add(number);
+            }
         } else {
             feedback.push('absent');
         }
