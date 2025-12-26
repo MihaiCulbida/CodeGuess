@@ -274,11 +274,18 @@ function endGame(won) {
     const text = document.getElementById('resultText');
 
     if (won) {
-        icon.textContent = '🎉';
+        const winImages = [
+            'img/win1.png',
+            'img/win2.png',
+            'img/win3.png'
+        ];
+        const chosen = winImages[Math.floor(Math.random() * winImages.length)];
+        icon.innerHTML = `<img src="${chosen}" alt="win" style="width:150px;height:150px;object-fit:contain;">`;
         title.textContent = translations[currentLang].won;
         text.textContent = translations[currentLang].wondesc;
     } else {
-        icon.textContent = '😔';
+        const loseImage = 'img/lose.png';
+        icon.innerHTML = `<img src="${loseImage}" alt="lose" style="width:150px;height:150px;object-fit:contain;">`;
         title.textContent = translations[currentLang].lost;
         text.textContent = `${translations[currentLang].lostdesc} ${secretCode.join('')}`;
     }
