@@ -27,7 +27,11 @@ const translations = {
         hard: "Hard",
         notes: "Notes",
         notesplaceholder: "Write..",
-        attemptstext: "attempts"
+        attemptstext: "attempts",
+        confirmback: "Are you sure?",
+        confirmbacktext: "Do you want to exit the game?",
+        yes: "Yes",
+        no: "No"
     },
     ru: {
         title: "CodeGuess",
@@ -57,7 +61,11 @@ const translations = {
         hard: "Сложно",
         notes: "Заметки",
         notesplaceholder: "Напишите..",
-        attemptstext: "попыток"
+        attemptstext: "попыток",
+        confirmback: "Вы уверены?",
+        confirmbacktext: "Хотите выйти из игры?",
+        yes: "Да",
+        no: "Нет"
     },
     ro: {
         title: "CodeGuess",
@@ -87,10 +95,22 @@ const translations = {
         hard: "Dificil",
         notes: "Notițe",
         notesplaceholder: "Scrie..",
-        attemptstext: "încercări"
+        attemptstext: "încercări",
+        confirmback: "Ești sigur?",
+        confirmbacktext: "Vrei să ieși din joc?",
+        yes: "Da",
+        no: "Nu",
     }
 };
 
+let guessHistory = [];
+let isDragging = false;
+let currentX;
+let currentY;
+let initialX;
+let initialY;
+let xOffset = 0;
+let yOffset = 0;
 let currentLang = 'en';
 let secretCode = [];
 let maxAttempts = 6;
@@ -175,6 +195,7 @@ function updateDiscoveredNumbers() {
 
 function startGame(mode, difficulty) {
     gameMode = parseInt(mode);
+    guessHistory = [];
     const attemptsMap = {
         3: { easy: 6, medium: 4, hard: 3 },
         4: { easy: 6, medium: 5, hard: 4 },
@@ -193,6 +214,7 @@ function startGame(mode, difficulty) {
     document.getElementById('difficultySelector').classList.remove('active');
     document.getElementById('gameArea').classList.add('active');
     document.getElementById('backBtn').classList.add('active');
+    document.getElementById('historyBtn').classList.add('active');
     document.getElementById('codeInput').maxLength = gameMode;
     document.getElementById('attemptsValue').textContent = '0';
     document.getElementById('maxAttemptsValue').textContent = maxAttempts;
@@ -200,6 +222,7 @@ function startGame(mode, difficulty) {
     document.getElementById('codeInput').value = '';
     
     updateDiscoveredNumbers();
+    updateHistoryDisplay();
 }
 
 function checkGuess(guess) {
@@ -210,11 +233,9 @@ function checkGuess(guess) {
         if (number === secretCode[idx]) {
             feedback.push('correct');
             discoveredNumbers.add(number);
-            // Șterge din portocalii dacă era acolo
             allNumbersFound.delete(number);
         } else if (secretCode.includes(number)) {
             feedback.push('present');
-            // Adaugă în portocalii doar dacă nu e deja în verzi
             if (!discoveredNumbers.has(number)) {
                 allNumbersFound.add(number);
             }
@@ -238,6 +259,11 @@ function displayGuess(guess, feedback) {
     });
 
     document.getElementById('guessesContainer').appendChild(row);
+    
+    guessHistory.push({ guess, feedback });
+    if (document.getElementById('floatingHistory').classList.contains('active')) {
+        updateHistoryDisplay();
+    }
 }
 
 function endGame(won) {
@@ -258,6 +284,77 @@ function endGame(won) {
     }
 
     modal.classList.add('active');
+}
+
+function updateHistoryDisplay() {
+    const content = document.getElementById('floatingContent');
+    content.innerHTML = '';
+    
+    guessHistory.slice().forEach(item => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        
+        item.guess.split('').forEach((num, idx) => {
+            const cell = document.createElement('div');
+            cell.className = 'history-number';
+            cell.textContent = num;
+            
+            if (item.feedback[idx] === 'correct') {
+                cell.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+            } else if (item.feedback[idx] === 'present') {
+                cell.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+            } else {
+                cell.style.background = 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)';
+            }
+            
+            historyItem.appendChild(cell);
+        });
+        
+        content.appendChild(historyItem);
+    });
+}
+
+function dragStart(e) {
+    e.preventDefault(); 
+    
+    if (e.type === "touchstart") {
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
+    } else {
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+    }
+
+    isDragging = true;
+}
+
+function drag(e) {
+    if (isDragging) {
+        e.preventDefault();
+        
+        if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+        } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+        }
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        setTranslate(currentX, currentY, document.getElementById('floatingHistory'));
+    }
+}
+
+function dragEnd(e) {
+    initialX = currentX;
+    initialY = currentY;
+    isDragging = false;
+}
+
+function setTranslate(xPos, yPos, el) {
+    el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
 }
 
 document.querySelectorAll('.mode-btn').forEach(btn => {
@@ -322,29 +419,133 @@ document.getElementById('closeHelp').addEventListener('click', () => {
     document.getElementById('helpModal').classList.remove('active');
 });
 
-document.getElementById('notesBtn').addEventListener('click', () => {
-    document.getElementById('notesModal').classList.add('active');
+document.getElementById('closeNotes').addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.getElementById('floatingNotes').classList.remove('active');
 });
 
-document.getElementById('closeNotesX').addEventListener('click', () => {
-    document.getElementById('notesModal').classList.remove('active');
+let notesXOffset = 0;
+let notesYOffset = 0;
+let notesCurrentX = 0;
+let notesCurrentY = 0;
+
+document.getElementById('notesBtn').addEventListener('click', () => {
+    const floating = document.getElementById('floatingNotes');
+    
+    if (floating.classList.contains('active')) {
+        floating.classList.remove('active');
+    } else {
+        const container = document.querySelector('.container');
+        const containerRect = container.getBoundingClientRect();
+        
+        const finalTop = containerRect.top + (containerRect.height / 2) - 150;
+        const finalLeft = containerRect.left + (containerRect.width / 2) - 150;
+        
+        floating.style.top = finalTop + 'px';
+        floating.style.left = finalLeft + 'px';
+        floating.style.transform = 'translate3d(0px, 0px, 0)';
+        
+        notesXOffset = 0;
+        notesYOffset = 0;
+        notesCurrentX = 0;
+        notesCurrentY = 0;
+        
+        floating.classList.add('active');
+    }
 });
+
+const notesHeader = document.getElementById('notesHeader');
+let isDraggingNotes = false;
+let notesInitialX;
+let notesInitialY;
+
+notesHeader.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    notesInitialX = e.clientX - notesXOffset;
+    notesInitialY = e.clientY - notesYOffset;
+    isDraggingNotes = true;
+});
+
+notesHeader.addEventListener("touchstart", (e) => {
+    notesInitialX = e.touches[0].clientX - notesXOffset;
+    notesInitialY = e.touches[0].clientY - notesYOffset;
+    isDraggingNotes = true;
+}, false);
+
+document.addEventListener("mousemove", (e) => {
+    if (isDraggingNotes) {
+        e.preventDefault();
+        notesCurrentX = e.clientX - notesInitialX;
+        notesCurrentY = e.clientY - notesInitialY;
+        notesXOffset = notesCurrentX;
+        notesYOffset = notesCurrentY;
+        document.getElementById('floatingNotes').style.transform = `translate3d(${notesCurrentX}px, ${notesCurrentY}px, 0)`;
+    }
+});
+
+document.addEventListener(
+    "touchmove",
+    (e) => {
+        if (isDraggingNotes) {
+            e.preventDefault();
+            notesCurrentX = e.touches[0].clientX - notesInitialX;
+            notesCurrentY = e.touches[0].clientY - notesInitialY;
+            notesXOffset = notesCurrentX;
+            notesYOffset = notesCurrentY;
+            document.getElementById('floatingNotes').style.transform =
+                `translate3d(${notesCurrentX}px, ${notesCurrentY}px, 0)`;
+        }
+    },
+    { passive: false } 
+);
+
+
+document.addEventListener("mouseup", () => {
+    notesInitialX = notesCurrentX;
+    notesInitialY = notesCurrentY;
+    isDraggingNotes = false;
+});
+
+document.addEventListener("touchend", () => {
+    notesInitialX = notesCurrentX;
+    notesInitialY = notesCurrentY;
+    isDraggingNotes = false;
+}, false);
 
 document.getElementById('playAgain').addEventListener('click', () => {
     document.getElementById('resultModal').classList.remove('active');
     document.getElementById('gameArea').classList.remove('active');
     document.getElementById('backBtn').classList.remove('active');
+    document.getElementById('historyBtn').classList.remove('active');
+    document.getElementById('floatingHistory').classList.remove('active');
+    document.getElementById('historyBtn').querySelector('img').src = 'img/open.png'; 
     document.getElementById('menuSelector').classList.add('active');
+    guessHistory = [];
+    updateHistoryDisplay();
 });
 
 document.getElementById('backBtn').addEventListener('click', () => {
+    document.getElementById('confirmBackModal').classList.add('active');
+});
+
+document.getElementById('confirmBackYes').addEventListener('click', () => {
+    document.getElementById('confirmBackModal').classList.remove('active');
     document.getElementById('gameArea').classList.remove('active');
     document.getElementById('difficultySelector').classList.remove('active');
     document.getElementById('backBtn').classList.remove('active');
+    document.getElementById('historyBtn').classList.remove('active');
+    document.getElementById('floatingHistory').classList.remove('active');
+    document.getElementById('historyBtn').querySelector('img').src = 'img/open.png'; 
     document.getElementById('menuSelector').classList.add('active');
     gameActive = false;
+    guessHistory = [];
+    updateHistoryDisplay();
 });
 
+
+document.getElementById('confirmBackNo').addEventListener('click', () => {
+    document.getElementById('confirmBackModal').classList.remove('active');
+});
 document.getElementById('langBtn').addEventListener('click', (e) => {
     e.stopPropagation();
     document.getElementById('langMenu').classList.toggle('active');
@@ -371,5 +572,45 @@ document.addEventListener('click', (e) => {
         langMenu.classList.remove('active');
     }
 });
+
+document.getElementById('historyBtn').addEventListener('click', () => {
+    const floating = document.getElementById('floatingHistory');
+    const historyBtn = document.getElementById('historyBtn');
+    const historyImg = historyBtn.querySelector('img');
+    
+    if (floating.classList.contains('active')) {
+        floating.classList.remove('active');
+        historyImg.src = 'img/open.png';
+    } else {
+        updateHistoryDisplay();
+        
+        const container = document.querySelector('.container');
+        const containerRect = container.getBoundingClientRect();
+        
+        const finalTop = containerRect.top - floating.offsetHeight - 10;
+        const finalLeft = containerRect.left + containerRect.width / 2 - 100;
+        
+        floating.style.top = finalTop + 'px';
+        floating.style.left = finalLeft + 'px';
+        floating.style.right = 'auto';
+        floating.style.transform = 'translate3d(0px, 0px, 0)';
+        
+        xOffset = 0;
+        yOffset = 0;
+        currentX = 0;
+        currentY = 0;
+        
+        floating.classList.add('active');
+        historyImg.src = 'img/close.png';
+    }
+});
+
+const floatingHistory = document.getElementById('floatingHistory');
+floatingHistory.addEventListener("touchstart",dragStart,{ passive: false });
+floatingHistory.addEventListener("touchend", dragEnd, false);
+floatingHistory.addEventListener("touchmove",drag,{ passive: false });
+floatingHistory.addEventListener("mousedown", dragStart, false);
+document.addEventListener("mouseup", dragEnd, false);
+document.addEventListener("mousemove", drag, false);
 
 setLanguage('en');

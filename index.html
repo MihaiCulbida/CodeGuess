@@ -12,6 +12,11 @@
     </button>
 
     <div class="top-right-icons">
+
+        <button class="icon-btn" id="historyBtn">
+            <img src="img/open.png" alt="History">
+        </button>
+
         <button class="icon-btn" id="notesBtn">
             <img src="img/notes.png" alt="Notes">
         </button>
@@ -122,11 +127,13 @@
         </div>
     </div>
 
-    <div class="modal" id="notesModal">
-        <div class="modal-content">
-            <div class="modal-title" data-i18n="notes">Notes</div>
+    <div class="floating-notes" id="floatingNotes">
+        <div class="floating-header" id="notesHeader">
+            <span data-i18n="notes">Notes</span>
+            <button class="floating-close" id="closeNotes">✕</button>
+        </div>
+        <div class="notes-content">
             <textarea class="notes-textarea" id="notesTextarea" data-i18n-placeholder="notesplaceholder"></textarea>
-            <button class="modal-close top-right" id="closeNotesX" aria-label="Close">✕</button>
         </div>
     </div>
 
@@ -138,6 +145,22 @@
             <button class="modal-close" id="playAgain" data-i18n="playagain">Play Again</button>
         </div>
     </div>
+
+    <div class="modal" id="confirmBackModal">
+    <div class="modal-content">
+        <div class="modal-title" data-i18n="confirmback">Ești sigur?</div>
+        <p class="modal-text" data-i18n="confirmbacktext">Vrei să ieși din joc?</p>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="modal-close" id="confirmBackYes" data-i18n="yes" style="background: #ef4444;">Da</button>
+            <button class="modal-close" id="confirmBackNo" data-i18n="no">Nu</button>
+        </div>
+    </div>
+</div>
+
+<div class="floating-history" id="floatingHistory">
+    <div class="floating-header" id="floatingHeader"></div>
+    <div class="floating-content" id="floatingContent"></div>
+</div>
 
 <script src="script.js"> </script>
 </body>

@@ -700,6 +700,50 @@ body {
     background: white;
 }
 
+.floating-notes {
+    display: none;
+    position: fixed;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    width: 300px;
+    z-index: 1500;
+    border: 3px solid #667eea;
+}
+
+.floating-notes.active {
+    display: block;
+}
+
+.floating-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.floating-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.notes-content {
+    padding: 12px;
+}
+
+.notes-textarea {
+    min-height: 200px;
+    margin: 0;
+}
+
 .difficulty-attempts {
     font-size: 16px;
     font-weight: 700;
@@ -707,6 +751,72 @@ body {
     margin-top: 8px;
     position: relative;
     z-index: 1;
+}
+
+.floating-history {
+    display: none;
+    position: fixed;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    width: auto;
+    z-index: 1500;
+    border: 3px solid #667eea;
+}
+
+.floating-history.active {
+    display: block;
+}
+
+.floating-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 13px 13px 0 0;
+    cursor: move;
+    font-weight: 700;
+    font-size: 14px;
+    user-select: none;
+}
+
+.floating-content {
+    padding: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    background: #f8f9ff;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    font-weight: 700;
+    justify-content: center;
+}
+
+.history-number {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 22px;
+    color: white;
+}
+
+#historyBtn {
+    display: none;
+}
+
+#historyBtn.active {
+    display: flex;
 }
 
 @media (max-width: 768px) {
@@ -730,6 +840,16 @@ body {
         width: 56px;
         height: 56px;
         font-size: 28px;
+    }
+
+    .floating-history {
+        min-width: 180px;
+    }
+    
+    .history-number {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
     }
 }
 
@@ -840,6 +960,35 @@ body {
     .stat-label {
         font-size: 10px;
     }
+
+     .floating-history {
+        min-width: 170px;
+        border: 2px solid #667eea;
+    }
+    
+    .floating-header {
+        padding: 10px 12px;
+        font-size: 13px;
+        border-radius: 11px 11px 0 0;
+    }
+    
+    .floating-content {
+        padding: 6px;
+        max-height: 250px;
+    }
+    
+    .history-item {
+        gap: 5px;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .history-number {
+        width: 38px;
+        height: 38px;
+        font-size: 19px;
+        border-radius: 7px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -927,6 +1076,34 @@ body {
         width: 20px;
         height: 20px;
     }
+
+        .floating-history {
+        min-width: 160px;
+    }
+    
+    .floating-header {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+    
+    .floating-content {
+        padding: 5px;
+        max-height: 220px;
+    }
+    
+    .history-item {
+        gap: 4px;
+        padding: 4px;
+        margin-bottom: 4px;
+        border-radius: 8px;
+    }
+    
+    .history-number {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        border-radius: 6px;
+    }
 }
 
 @media (max-width: 360px) {
@@ -999,5 +1176,35 @@ body {
         width: 40px;
         height: 40px;
         font-size: 18px;
+    }
+
+        .floating-history {
+        min-width: 145px;
+        border-radius: 12px;
+    }
+    
+    .floating-header {
+        padding: 8px 10px;
+        font-size: 11px;
+        border-radius: 9px 9px 0 0;
+    }
+    
+    .floating-content {
+        padding: 4px;
+        max-height: 200px;
+    }
+    
+    .history-item {
+        gap: 3px;
+        padding: 3px;
+        margin-bottom: 3px;
+        border-radius: 7px;
+    }
+    
+    .history-number {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        border-radius: 5px;
     }
 }
