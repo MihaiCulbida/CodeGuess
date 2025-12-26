@@ -296,86 +296,34 @@ function endGame(won) {
 }
 
 function createConfetti() {
-    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f39c12', '#9b59b6', '#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#e67e22'];
-    const confettiCount = 80;
-    
     const modalContent = document.querySelector('#resultModal .modal-content');
-    const rect = modalContent.getBoundingClientRect();
-    const resultText = document.getElementById('resultText');
-    const textRect = resultText.getBoundingClientRect();
-    const modalRect = modalContent.getBoundingClientRect();
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '1';
+    canvas.width = modalContent.offsetWidth;
+    canvas.height = modalContent.offsetHeight;
+    modalContent.appendChild(canvas);
     
-    const centerX = rect.width / 2;
-    const cannonY = textRect.bottom - modalRect.top - 8; 
-    const floorY = textRect.bottom - modalRect.top + 20;
+    const jsConfetti = new JSConfetti({ canvas });
     
-    const cannon = document.createElement('div');
-    cannon.className = 'confetti-cannon';
-    cannon.style.left = centerX + 'px';
-    cannon.style.top = cannonY + 'px';
-    cannon.style.animation = 'cannon-fade 2s ease-out forwards';
-    
-    cannon.innerHTML = `
-    <svg width="35" height="45" viewBox="0 0 35 45" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <linearGradient id="cannonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#9ca3af;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#6b7280;stop-opacity:1" />
-            </linearGradient>
-        </defs>
-        <!-- Corpul pistolului -->
-        <rect x="10" y="8" width="15" height="28" rx="2" fill="url(#cannonGradient)" />
-        <!-- Rotila mare jos la mijloc -->
-        <circle cx="17.5" cy="34" r="9" fill="#374151" />
-    </svg>
-`;
-    
-    modalContent.appendChild(cannon);
-    
-    setTimeout(() => cannon.remove(), 2000);
-    
-    for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = centerX + 'px';
-        confetti.style.top = cannonY + 'px'; 
-        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-        
-        const shape = Math.random();
-        if (shape < 0.33) {
-            confetti.style.width = '8px';
-            confetti.style.height = '12px';
-        } else if (shape < 0.66) {
-            confetti.style.width = '10px';
-            confetti.style.height = '6px';
-        } else {
-            confetti.style.width = '6px';
-            confetti.style.height = '6px';
-            confetti.style.borderRadius = '50%';
-        }
-        
-        const spread = (Math.random() - 0.5) * rect.width * 0.8;
-        const upForce = Math.random() * 120 + 40;
-        const sidewaysVariation = Math.random() * 0.5 + 0.8; 
-        
-        const tx = spread * sidewaysVariation;
-        const ty = -upForce;
-
-        const fallDistance = floorY - cannonY + (Math.random() * 30 - 15);
-        
-        confetti.style.setProperty('--tx', tx + 'px');
-        confetti.style.setProperty('--ty', ty + 'px');
-        confetti.style.setProperty('--floor', fallDistance + 'px');
-        confetti.style.setProperty('--rz', (Math.random() * 360) + 'deg');
-        
-        const duration = Math.random() * 1.5 + 3;
-        confetti.style.animation = `confetti-fall ${duration}s ease-in-out forwards`;
-        confetti.style.animationDelay = Math.random() * 0.15 + 's';
-        
-        modalContent.appendChild(confetti);
-        
-        setTimeout(() => confetti.remove(), (duration + 1) * 1000);
-    }
+    jsConfetti.addConfetti({
+        confettiColors: [
+            '#ff6b6b', '#4ecdc4', '#45b7d1', '#f39c12', 
+            '#9b59b6', '#e74c3c', '#3498db', '#2ecc71', 
+            '#f1c40f', '#e67e22'
+        ],
+        confettiRadius: 3,
+        confettiNumber: 500,
+    }).then(() => {
+        setTimeout(() => {
+            canvas.remove();
+        }, 2000);
+    });
 }
 
 function updateHistoryDisplay() {
