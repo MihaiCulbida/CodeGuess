@@ -819,6 +819,55 @@ body {
     display: flex;
 }
 
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translate(0, 0) rotateZ(0deg) rotateY(0deg);
+        opacity: 1;
+    }
+    15% {
+        transform: translate(var(--tx), var(--ty)) rotateZ(calc(var(--rz) * 0.5)) rotateY(180deg);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(calc(var(--tx) * 1.2), var(--floor)) rotateZ(calc(var(--rz) * 2)) rotateY(720deg);
+        opacity: 0;
+    }
+}
+
+.confetti-cannon {
+    position: absolute;
+    width: 35px;
+    height: 45px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes cannon-fade {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1.15);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0.7);
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 30px;
