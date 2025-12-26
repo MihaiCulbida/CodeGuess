@@ -315,7 +315,7 @@ function createConfetti() {
     cannon.style.top = cannonY + 'px';
     cannon.style.animation = 'cannon-fade 2s ease-out forwards';
     
-cannon.innerHTML = `
+    cannon.innerHTML = `
     <svg width="35" height="45" viewBox="0 0 35 45" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="cannonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
