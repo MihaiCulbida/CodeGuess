@@ -485,12 +485,13 @@ document.getElementById('codeInput').addEventListener('input', (e) => {
 document.getElementById('codeInput').addEventListener('keydown', (e) => {
     const input = e.target;
     if (input.value.length >= gameMode && 
-        !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
+        !['Enter', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
         const message = translations[currentLang].toomany.replace('{count}', gameMode);
         showError(message);
         e.preventDefault();
     }
 });
+
 document.getElementById('helpBtn').addEventListener('click', () => {
     document.getElementById('helpModal').classList.add('active');
 });
