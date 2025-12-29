@@ -68,7 +68,7 @@ const translations = {
         yes: "Да",
         no: "Нет",
         duplicate: "Все цифры должны быть уникальными",
-        invalidlength: "Введите {count} цифр",
+        invalidlength: "Введите {count} цифры",
         toomany: "Максимум {count} цифр разрешено"
     },
     ro: {
