@@ -144,6 +144,15 @@ function setLanguage(lang) {
     }
 }
 
+function getRussianNumberForm(count) {
+    if (currentLang !== 'ru') return '';
+    
+    if (count >= 2 && count <= 4) {
+        return 'цифры';
+    }
+    return 'цифр';
+}
+
 function showError(message) {
     const errorEl = document.getElementById('errorMessage');
     errorEl.textContent = message;
@@ -437,7 +446,10 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     if (!gameActive) return;
     
     if (guess.length !== gameMode) {
-        const message = translations[currentLang].invalidlength.replace('{count}', gameMode);
+        let message = translations[currentLang].invalidlength.replace('{count}', gameMode);
+        if (currentLang === 'ru') {
+            message = `Введите ${gameMode} ${getRussianNumberForm(gameMode)}`;
+        }
         showError(message);
         return;
     }
@@ -474,8 +486,11 @@ document.getElementById('codeInput').addEventListener('input', (e) => {
     const oldValue = e.target.value.replace(/[^0-9]/g, '');
     
     if (oldValue.length > gameMode) {
-        const message = translations[currentLang].toomany.replace('{count}', gameMode);
-        showError(message);
+    let message = translations[currentLang].toomany.replace('{count}', gameMode);
+    if (currentLang === 'ru') {
+        message = `Максимум ${gameMode} ${getRussianNumberForm(gameMode)} разрешено`;
+    }
+    showError(message);
         e.target.value = oldValue.slice(0, gameMode);
     } else {
         e.target.value = oldValue;
@@ -486,7 +501,10 @@ document.getElementById('codeInput').addEventListener('keydown', (e) => {
     const input = e.target;
     if (input.value.length >= gameMode && 
         !['Enter', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
-        const message = translations[currentLang].toomany.replace('{count}', gameMode);
+        let message = translations[currentLang].toomany.replace('{count}', gameMode);
+        if (currentLang === 'ru') {
+            message = `Максимум ${gameMode} ${getRussianNumberForm(gameMode)} разрешено`;
+        }
         showError(message);
         e.preventDefault();
     }
@@ -808,8 +826,11 @@ document.querySelectorAll('.keyboard-key:not(.keyboard-backspace)').forEach(key 
         
         if (text) {
             if (input.value.length >= gameMode) {
-                const message = translations[currentLang].toomany.replace('{count}', gameMode);
-                showError(message);
+            let message = translations[currentLang].toomany.replace('{count}', gameMode);
+            if (currentLang === 'ru') {
+                message = `Максимум ${gameMode} ${getRussianNumberForm(gameMode)} разрешено`;
+            }
+            showError(message);
                 return;
             }
             input.value += text;
