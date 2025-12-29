@@ -18,6 +18,10 @@
             <img src="img/open.png" alt="History">
         </button>
 
+        <button class="icon-btn" id="keyboardBtn">
+            <img src="img/keyboard.png" alt="Keyboard">
+        </button>
+
         <button class="icon-btn" id="notesBtn">
             <img src="img/notes.png" alt="Notes">
         </button>
@@ -78,6 +82,7 @@
        </div>
 
 <div class="game-area" id="gameArea">
+    <div class="error-message" id="errorMessage"></div>
     <div class="stats">
         <div class="stat">
             <div class="stat-value" id="attemptsValue">0</div>
@@ -161,6 +166,30 @@
 <div class="floating-history" id="floatingHistory">
     <div class="floating-header" id="floatingHeader"></div>
     <div class="floating-content" id="floatingContent"></div>
+</div>
+
+<div class="floating-keyboard" id="floatingKeyboard">
+    <div class="floating-header" id="keyboardHeader"></div>
+    <div class="keyboard-content">
+        <div class="keyboard-row">
+            <button class="keyboard-key">1</button>
+            <button class="keyboard-key">2</button>
+            <button class="keyboard-key">3</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="keyboard-key">4</button>
+            <button class="keyboard-key">5</button>
+            <button class="keyboard-key">6</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="keyboard-key">7</button>
+            <button class="keyboard-key">8</button>
+            <button class="keyboard-key">9</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="keyboard-key keyboard-zero">0</button>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>

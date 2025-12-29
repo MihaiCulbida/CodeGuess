@@ -25,6 +25,7 @@ body {
 
 .header {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 40px;
@@ -321,6 +322,21 @@ body {
     background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
     border-radius: 16px;
     border: 2px solid #e8edff;
+}
+
+.error-message {
+    min-height: 20px;
+    font-size: 15px;
+    color: #ef4444;
+    font-weight: 600;
+    margin-bottom: 7px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-align: center;
+}
+
+.error-message.show {
+    opacity: 1;
 }
 
 .stat {
@@ -816,6 +832,71 @@ body {
 }
 
 #historyBtn.active {
+    display: flex;
+}
+
+.floating-keyboard {
+    display: none;
+    position: fixed;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    width: 200px;
+    z-index: 1500;
+    border: 3px solid #667eea;
+}
+
+.floating-keyboard.active {
+    display: block;
+}
+
+.keyboard-content {
+    padding: 12px;
+}
+
+.keyboard-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    justify-content: center;
+}
+
+.keyboard-row:last-child {
+    margin-bottom: 0;
+}
+
+.keyboard-key {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.keyboard-key:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.keyboard-key:active {
+    transform: translateY(0);
+}
+
+.keyboard-zero {
+    width: 108px;
+}
+
+#keyboardBtn {
+    display: none;
+}
+
+#keyboardBtn.active {
     display: flex;
 }
 

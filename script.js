@@ -20,7 +20,6 @@ const translations = {
         lost: "Game Over",
         wondesc: "You guessed the code!",
         lostdesc: "The code was:",
-        duplicate: "All numbers must be unique!",
         choosedifficulty: "Choose Difficulty",
         easy: "Easy",
         medium: "Medium",
@@ -31,7 +30,9 @@ const translations = {
         confirmback: "Are you sure?",
         confirmbacktext: "Do you want to exit the game?",
         yes: "Yes",
-        no: "No"
+        no: "No",
+        duplicate: "All numbers must be unique",
+        invalidlength: "Enter {count} numbers"
     },
     ru: {
         title: "CodeGuess",
@@ -54,7 +55,6 @@ const translations = {
         lost: "Игра окончена",
         wondesc: "Вы угадали код!",
         lostdesc: "Код был:",
-        duplicate: "Все цифры должны быть уникальными!",
         choosedifficulty: "Выберите сложность",
         easy: "Легко",
         medium: "Средне",
@@ -65,7 +65,9 @@ const translations = {
         confirmback: "Вы уверены?",
         confirmbacktext: "Хотите выйти из игры?",
         yes: "Да",
-        no: "Нет"
+        no: "Нет",
+        duplicate: "Все цифры должны быть уникальными",
+        invalidlength: "Введите {count} цифр"
     },
     ro: {
         title: "CodeGuess",
@@ -100,6 +102,8 @@ const translations = {
         confirmbacktext: "Vrei să ieși din joc?",
         yes: "Da",
         no: "Nu",
+        duplicate: "Toate cifrele trebuie să fie unice",
+        invalidlength: "Introdu {count} cifre"
     }
 };
 
@@ -137,6 +141,15 @@ function setLanguage(lang) {
     }
 }
 
+function showError(message) {
+    const errorEl = document.getElementById('errorMessage');
+    errorEl.textContent = message;
+    errorEl.classList.add('show');
+    
+    setTimeout(() => {
+        errorEl.classList.remove('show');
+    }, 3000);
+}
 function generateCode(length) {
     const numbers = [0,1,2,3,4,5,6,7,8,9];
     const code = [];
@@ -215,6 +228,7 @@ function startGame(mode, difficulty) {
     document.getElementById('gameArea').classList.add('active');
     document.getElementById('backBtn').classList.add('active');
     document.getElementById('historyBtn').classList.add('active');
+    document.getElementById('keyboardBtn').classList.add('active');
     document.getElementById('codeInput').maxLength = gameMode;
     document.getElementById('attemptsValue').textContent = '0';
     document.getElementById('maxAttemptsValue').textContent = maxAttempts;
@@ -417,11 +431,17 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     const input = document.getElementById('codeInput');
     const guess = input.value;
 
-    if (!gameActive || guess.length !== gameMode) return;
+    if (!gameActive) return;
+    
+    if (guess.length !== gameMode) {
+        const message = translations[currentLang].invalidlength.replace('{count}', gameMode);
+        showError(message);
+        return;
+    }
 
     const numbers = guess.split('');
     if (new Set(numbers).size !== numbers.length) {
-        alert(translations[currentLang].duplicate);
+        showError(translations[currentLang].duplicate);
         return;
     }
 
@@ -462,6 +482,7 @@ document.getElementById('closeHelp').addEventListener('click', () => {
 document.getElementById('closeNotes').addEventListener('click', (e) => {
     e.stopPropagation();
     document.getElementById('floatingNotes').classList.remove('active');
+    document.getElementById('notesBtn').querySelector('img').src = 'img/notes.png';
 });
 
 let notesXOffset = 0;
@@ -471,9 +492,12 @@ let notesCurrentY = 0;
 
 document.getElementById('notesBtn').addEventListener('click', () => {
     const floating = document.getElementById('floatingNotes');
+    const notesBtn = document.getElementById('notesBtn');
+    const notesImg = notesBtn.querySelector('img');
     
     if (floating.classList.contains('active')) {
         floating.classList.remove('active');
+        notesImg.src = 'img/notes.png';
     } else {
         const container = document.querySelector('.container');
         const containerRect = container.getBoundingClientRect();
@@ -491,6 +515,7 @@ document.getElementById('notesBtn').addEventListener('click', () => {
         notesCurrentY = 0;
         
         floating.classList.add('active');
+        notesImg.src = 'img/close.png';
     }
 });
 
@@ -557,8 +582,13 @@ document.getElementById('playAgain').addEventListener('click', () => {
     document.getElementById('gameArea').classList.remove('active');
     document.getElementById('backBtn').classList.remove('active');
     document.getElementById('historyBtn').classList.remove('active');
+    document.getElementById('keyboardBtn').classList.remove('active');
+    document.getElementById('floatingKeyboard').classList.remove('active');
+    document.getElementById('keyboardBtn').querySelector('img').src = 'img/keyboard.png';
     document.getElementById('floatingHistory').classList.remove('active');
     document.getElementById('historyBtn').querySelector('img').src = 'img/open.png'; 
+    document.getElementById('floatingNotes').classList.remove('active');
+    document.getElementById('notesBtn').querySelector('img').src = 'img/notes.png';
     document.getElementById('menuSelector').classList.add('active');
     guessHistory = [];
     updateHistoryDisplay();
@@ -574,8 +604,13 @@ document.getElementById('confirmBackYes').addEventListener('click', () => {
     document.getElementById('difficultySelector').classList.remove('active');
     document.getElementById('backBtn').classList.remove('active');
     document.getElementById('historyBtn').classList.remove('active');
+    document.getElementById('keyboardBtn').classList.remove('active');
+    document.getElementById('floatingKeyboard').classList.remove('active');
+    document.getElementById('keyboardBtn').querySelector('img').src = 'img/keyboard.png';
     document.getElementById('floatingHistory').classList.remove('active');
     document.getElementById('historyBtn').querySelector('img').src = 'img/open.png'; 
+    document.getElementById('floatingNotes').classList.remove('active');
+    document.getElementById('notesBtn').querySelector('img').src = 'img/notes.png';
     document.getElementById('menuSelector').classList.add('active');
     gameActive = false;
     guessHistory = [];
@@ -654,3 +689,102 @@ document.addEventListener("mouseup", dragEnd, false);
 document.addEventListener("mousemove", drag, false);
 
 setLanguage('en');
+
+let keyboardXOffset = 0;
+let keyboardYOffset = 0;
+let keyboardCurrentX = 0;
+let keyboardCurrentY = 0;
+let isDraggingKeyboard = false;
+let keyboardInitialX;
+let keyboardInitialY;
+
+document.getElementById('keyboardBtn').addEventListener('click', () => {
+    const floating = document.getElementById('floatingKeyboard');
+    const keyboardBtn = document.getElementById('keyboardBtn');
+    const keyboardImg = keyboardBtn.querySelector('img');
+    
+    if (floating.classList.contains('active')) {
+        floating.classList.remove('active');
+        keyboardImg.src = 'img/keyboard.png';
+    } else {
+        const container = document.querySelector('.container');
+        const containerRect = container.getBoundingClientRect();
+        
+        const finalTop = containerRect.top - floating.offsetHeight - 10;
+        const finalLeft = containerRect.left + containerRect.width / 2 - 100;
+        
+        floating.style.top = finalTop + 'px';
+        floating.style.left = finalLeft + 'px';
+        floating.style.transform = 'translate3d(0px, 0px, 0)';
+        
+        keyboardXOffset = 0;
+        keyboardYOffset = 0;
+        keyboardCurrentX = 0;
+        keyboardCurrentY = 0;
+        
+        floating.classList.add('active');
+        keyboardImg.src = 'img/close.png';
+    }
+});
+    
+const keyboardHeader = document.getElementById('keyboardHeader');
+
+keyboardHeader.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    keyboardInitialX = e.clientX - keyboardXOffset;
+    keyboardInitialY = e.clientY - keyboardYOffset;
+    isDraggingKeyboard = true;
+});
+
+keyboardHeader.addEventListener("touchstart", (e) => {
+    keyboardInitialX = e.touches[0].clientX - keyboardXOffset;
+    keyboardInitialY = e.touches[0].clientY - keyboardYOffset;
+    isDraggingKeyboard = true;
+}, false);
+
+document.addEventListener("mousemove", (e) => {
+    if (isDraggingKeyboard) {
+        e.preventDefault();
+        keyboardCurrentX = e.clientX - keyboardInitialX;
+        keyboardCurrentY = e.clientY - keyboardInitialY;
+        keyboardXOffset = keyboardCurrentX;
+        keyboardYOffset = keyboardCurrentY;
+        document.getElementById('floatingKeyboard').style.transform = `translate3d(${keyboardCurrentX}px, ${keyboardCurrentY}px, 0)`;
+    }
+});
+
+document.addEventListener("touchmove", (e) => {
+    if (isDraggingKeyboard) {
+        e.preventDefault();
+        keyboardCurrentX = e.touches[0].clientX - keyboardInitialX;
+        keyboardCurrentY = e.touches[0].clientY - keyboardInitialY;
+        keyboardXOffset = keyboardCurrentX;
+        keyboardYOffset = keyboardCurrentY;
+        document.getElementById('floatingKeyboard').style.transform = `translate3d(${keyboardCurrentX}px, ${keyboardCurrentY}px, 0)`;
+    }
+}, { passive: false });
+
+document.addEventListener("mouseup", () => {
+    if (isDraggingKeyboard) {
+        keyboardInitialX = keyboardCurrentX;
+        keyboardInitialY = keyboardCurrentY;
+        isDraggingKeyboard = false;
+    }
+});
+
+document.addEventListener("touchend", () => {
+    if (isDraggingKeyboard) {
+        keyboardInitialX = keyboardCurrentX;
+        keyboardInitialY = keyboardCurrentY;
+        isDraggingKeyboard = false;
+    }
+}, false);
+
+document.querySelectorAll('.keyboard-key').forEach(key => {
+    key.addEventListener('click', () => {
+        const input = document.getElementById('codeInput');
+        if (input.value.length < gameMode) {
+            input.value += key.textContent;
+        }
+    });
+});
