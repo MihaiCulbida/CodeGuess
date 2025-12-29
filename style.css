@@ -889,7 +889,20 @@ body {
 }
 
 .keyboard-zero {
-    width: 108px;
+    width: 80px;
+}
+
+.keyboard-backspace {
+    width: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyboard-backspace img {
+    width: 34px;
+    height: 34px;
+    filter: invert(1);
 }
 
 #keyboardBtn {

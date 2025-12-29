@@ -32,7 +32,8 @@ const translations = {
         yes: "Yes",
         no: "No",
         duplicate: "All numbers must be unique",
-        invalidlength: "Enter {count} numbers"
+        invalidlength: "Enter {count} numbers",
+        toomany: "Maximum {count} numbers allowed"
     },
     ru: {
         title: "CodeGuess",
@@ -67,7 +68,8 @@ const translations = {
         yes: "Да",
         no: "Нет",
         duplicate: "Все цифры должны быть уникальными",
-        invalidlength: "Введите {count} цифр"
+        invalidlength: "Введите {count} цифр",
+        toomany: "Максимум {count} цифр разрешено"
     },
     ro: {
         title: "CodeGuess",
@@ -103,7 +105,8 @@ const translations = {
         yes: "Da",
         no: "Nu",
         duplicate: "Toate cifrele trebuie să fie unice",
-        invalidlength: "Introdu {count} cifre"
+        invalidlength: "Introdu {count} cifre",
+        toomany: "Maxim {count} cifre permise"
     }
 };
 
@@ -468,9 +471,26 @@ document.getElementById('codeInput').addEventListener('keypress', (e) => {
 });
 
 document.getElementById('codeInput').addEventListener('input', (e) => {
-    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    const oldValue = e.target.value.replace(/[^0-9]/g, '');
+    
+    if (oldValue.length > gameMode) {
+        const message = translations[currentLang].toomany.replace('{count}', gameMode);
+        showError(message);
+        e.target.value = oldValue.slice(0, gameMode);
+    } else {
+        e.target.value = oldValue;
+    }
 });
 
+document.getElementById('codeInput').addEventListener('keydown', (e) => {
+    const input = e.target;
+    if (input.value.length >= gameMode && 
+        !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
+        const message = translations[currentLang].toomany.replace('{count}', gameMode);
+        showError(message);
+        e.preventDefault();
+    }
+});
 document.getElementById('helpBtn').addEventListener('click', () => {
     document.getElementById('helpModal').classList.add('active');
 });
@@ -780,11 +800,51 @@ document.addEventListener("touchend", () => {
     }
 }, false);
 
-document.querySelectorAll('.keyboard-key').forEach(key => {
+document.querySelectorAll('.keyboard-key:not(.keyboard-backspace)').forEach(key => {
     key.addEventListener('click', () => {
         const input = document.getElementById('codeInput');
-        if (input.value.length < gameMode) {
-            input.value += key.textContent;
+        const text = key.textContent.trim();
+        
+        if (text) {
+            if (input.value.length >= gameMode) {
+                const message = translations[currentLang].toomany.replace('{count}', gameMode);
+                showError(message);
+                return;
+            }
+            input.value += text;
         }
     });
 });
+
+let backspaceInterval;
+
+const startBackspace = (e) => {
+    e.preventDefault();
+    const input = document.getElementById('codeInput');
+    if (input.value.length > 0) {
+        input.value = input.value.slice(0, -1);
+    }
+    backspaceInterval = setInterval(() => {
+        const input = document.getElementById('codeInput');
+        if (input.value.length > 0) {
+            input.value = input.value.slice(0, -1);
+        } else {
+            clearInterval(backspaceInterval);
+        }
+    }, 100);
+};
+
+const stopBackspace = () => {
+    if (backspaceInterval) {
+        clearInterval(backspaceInterval);
+        backspaceInterval = null;
+    }
+};
+
+const backspaceBtn = document.getElementById('keyboardBackspace');
+backspaceBtn.addEventListener('mousedown', startBackspace);
+backspaceBtn.addEventListener('mouseup', stopBackspace);
+backspaceBtn.addEventListener('mouseleave', stopBackspace);
+backspaceBtn.addEventListener('touchstart', startBackspace);
+backspaceBtn.addEventListener('touchend', stopBackspace);
+backspaceBtn.addEventListener('touchcancel', stopBackspace);
