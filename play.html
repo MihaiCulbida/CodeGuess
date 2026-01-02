@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Guess</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image" href="img/logo.png">
+</head>
+<body>
+    <button class="top-left-btn" id="backBtn">
+        <img src="img/back.png" alt="Back">
+    </button>
+
+    <div class="top-right-icons">
+
+        <button class="icon-btn" id="historyBtn">
+            <img src="img/open.png" alt="History">
+        </button>
+
+        <button class="icon-btn" id="keyboardBtn">
+            <img src="img/keyboard.png" alt="Keyboard">
+        </button>
+
+        <button class="icon-btn" id="notesBtn">
+            <img src="img/notes.png" alt="Notes">
+        </button>
+
+        <button class="icon-btn" id="helpBtn">
+            <img src="img/help.png" alt="Help">
+        </button>
+
+         <button class="icon-btn planet-btn" id="langBtn" aria-label="Schimbă limba">
+            <img src="img/language.png" alt="Language">
+        </button>
+        
+        <div class="lang-menu" id="langMenu">
+            <div class="lang-option" data-lang="en">English</div>
+            <div class="lang-option" data-lang="ru">Русский</div>
+            <div class="lang-option" data-lang="ro">Română</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="title" data-i18n="title">CodeGuess</div>
+        </div>
+
+        <div class="menu-selector active" id="menuSelector">
+            <div class="mode-selector">
+                <div class="mode-btn" data-mode="3">
+                    <div class="mode-title" data-i18n="mode3title">3 numbers</div>
+                </div>
+                <div class="mode-btn" data-mode="4">
+                    <div class="mode-title" data-i18n="mode4title">4 numbers</div>
+                </div>
+                <div class="mode-btn" data-mode="5">
+                    <div class="mode-title" data-i18n="mode5title">5 numbers</div>
+                </div>
+                <div class="mode-btn" data-mode="6">
+                    <div class="mode-title" data-i18n="mode6title">6 numbers</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="difficulty-selector" id="difficultySelector">
+           <div class="difficulty-title" data-i18n="choosedifficulty">Choose Difficulty</div>
+           <div class="difficulty-buttons">
+               <div class="difficulty-btn" data-difficulty="easy">
+                   <div class="difficulty-name" data-i18n="easy">Easy</div>
+                   <div class="difficulty-attempts"></div>
+               </div>
+               <div class="difficulty-btn" data-difficulty="medium">
+                   <div class="difficulty-name" data-i18n="medium">Medium</div>
+                   <div class="difficulty-attempts"></div>
+               </div>
+               <div class="difficulty-btn" data-difficulty="hard">
+                   <div class="difficulty-name" data-i18n="hard">Hard</div>
+                   <div class="difficulty-attempts"></div>
+               </div>
+           </div>
+       </div>
+
+<div class="game-area" id="gameArea">
+    <div class="error-message" id="errorMessage"></div>
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value" id="attemptsValue">0</div>
+            <div class="stat-label" data-i18n="attempts">Attempts</div>
+        </div>
+        
+        <div class="discovered-numbers" id="discoveredNumbers"></div>
+        
+        <div class="stat">
+            <div class="stat-value" id="maxAttemptsValue">6</div>
+            <div class="stat-label" data-i18n="maxattempts">Max</div>
+        </div>
+    </div>
+
+
+            <div class="input-area">
+                <input type="text" class="code-input" id="codeInput" data-i18n-placeholder="entercode">
+                <button class="submit-btn" id="submitBtn">
+                    <img src="img/submit.png" alt="Submit">
+                </button>
+            </div>
+
+            <div class="guesses" id="guessesContainer"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-title" data-i18n="howtoplay">How to Play</div>
+            <p class="modal-text" data-i18n="rule1">Guess the secret code with unique numbers.</p>
+            <p class="modal-text" data-i18n="rule2">After each guess, the color shows how close you are:</p>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">5</div>
+                    <span data-i18n="correct">Correct number, correct position</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">3</div>
+                    <span data-i18n="present">Correct number, wrong position</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);">7</div>
+                    <span data-i18n="absent">Number not in code</span>
+                </div>
+            </div>
+            <button class="modal-close top-right" id="closeHelp" aria-label="Close">✕</button>
+        </div>
+    </div>
+
+    <div class="floating-notes" id="floatingNotes">
+        <div class="floating-header" id="notesHeader">
+            <span data-i18n="notes">Notes</span>
+            <button class="floating-close" id="closeNotes">✕</button>
+        </div>
+        <div class="notes-content">
+            <textarea class="notes-textarea" id="notesTextarea" data-i18n-placeholder="notesplaceholder"></textarea>
+        </div>
+    </div>
+
+    <div class="modal result-modal" id="resultModal">
+        <div class="modal-content">
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="modal-title" id="resultTitle"></div>
+            <p class="modal-text" id="resultText"></p>
+            <button class="modal-close" id="playAgain" data-i18n="playagain">Play Again</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmBackModal">
+    <div class="modal-content">
+        <div class="modal-title" data-i18n="confirmback">Ești sigur?</div>
+        <p class="modal-text" data-i18n="confirmbacktext">Vrei să ieși din joc?</p>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="modal-close" id="confirmBackYes" data-i18n="yes" style="background: #ef4444;">Da</button>
+            <button class="modal-close" id="confirmBackNo" data-i18n="no">Nu</button>
+        </div>
+    </div>
+</div>
+
+<div class="floating-history" id="floatingHistory">
+    <div class="floating-header" id="floatingHeader"></div>
+    <div class="floating-content" id="floatingContent"></div>
+</div>
+
+<div class="floating-keyboard" id="floatingKeyboard">
+    <div class="floating-header" id="keyboardHeader"></div>
+    <div class="keyboard-content">
+        <div class="keyboard-row">
+            <button class="keyboard-key">1</button>
+            <button class="keyboard-key">2</button>
+            <button class="keyboard-key">3</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="keyboard-key">4</button>
+            <button class="keyboard-key">5</button>
+            <button class="keyboard-key">6</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="keyboard-key">7</button>
+            <button class="keyboard-key">8</button>
+            <button class="keyboard-key">9</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="keyboard-key keyboard-zero">0</button>
+                <button class="keyboard-key keyboard-backspace" id="keyboardBackspace">
+                <img src="img/backspace.png" alt="Backspace">
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
