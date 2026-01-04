@@ -9,8 +9,7 @@ const translations = {
         maxattempts: "Max",
         entercode: "Number",
         howtoplay: "How to Play",
-        rule1: "Guess the secret code with unique numbers.",
-        rule2: "After each guess, the color shows how close you are:",
+        rule1: "Guess the secret code with unique numbers. After each guess, the color shows how close you are:",
         correct: "Correct number, correct position",
         present: "Correct number, wrong position",
         absent: "Number not in code",
@@ -46,8 +45,7 @@ const translations = {
         maxattempts: "Макс",
         entercode: "Номер",
         howtoplay: "Как играть",
-        rule1: "Угадайте секретный код с уникальными цифрами.",
-        rule2: "После каждой попытки цвет показывает насколько вы близки:",
+        rule1: "Угадайте секретный код с уникальными цифрами. После каждой попытки цвет показывает насколько вы близки:",
         correct: "Правильная цифра, правильная позиция",
         present: "Правильная цифра, неправильная позиция",
         absent: "Цифры нет в коде",
@@ -83,8 +81,7 @@ const translations = {
         maxattempts: "Max",
         entercode: "Numărul",
         howtoplay: "Cum se joacă",
-        rule1: "Ghicește codul secret cu cifre unice.",
-        rule2: "După fiecare încercare, culoarea arată cât de aproape ești:",
+        rule1: "Ghicește codul secret cu cifre unice. După fiecare încercare, culoarea arată cât de aproape ești:",
         correct: "Cifră corectă, poziție corectă",
         present: "Cifră corectă, poziție greșită",
         absent: "Cifra nu există în cod",
@@ -109,7 +106,7 @@ const translations = {
         duplicate: "Toate cifrele trebuie să fie unice",
         invalidlength: "Introdu {count} cifre",
         toomany: "Maxim {count} cifre permise",
-        statsinfo: "Cifrele afișate în centru sunt cifre descoperite din cod, dar poziția lor în bara de statistici NU indică poziția lor în codul secret"
+        statsinfo: "Cifrele afișate în centru sunt cifre descoperite din cod, dar poziția lor în bara de statistici NU indică poziția lor în codul secret "
     }
 };
 
