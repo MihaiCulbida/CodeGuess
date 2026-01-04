@@ -33,7 +33,8 @@ const translations = {
         no: "No",
         duplicate: "All numbers must be unique",
         invalidlength: "Enter {count} numbers",
-        toomany: "Maximum {count} numbers allowed"
+        toomany: "Maximum {count} numbers allowed",
+        statsinfo: "The numbers shown in the middle are discovered numbers from the code, but their position in the stats bar does NOT indicate their position in the secret code"
     },
     ru: {
         title: "CodeGuess",
@@ -69,7 +70,8 @@ const translations = {
         no: "Нет",
         duplicate: "Все цифры должны быть уникальными",
         invalidlength: "Введите {count} цифры",
-        toomany: "Максимум {count} цифр разрешено"
+        toomany: "Максимум {count} цифр разрешено",
+        statsinfo: "Цифры в центре это найденные цифры из кода, но их позиция в строке статистики НЕ указывает на их позицию в секретном коде"
     },
     ro: {
         title: "CodeGuess",
@@ -106,7 +108,8 @@ const translations = {
         no: "Nu",
         duplicate: "Toate cifrele trebuie să fie unice",
         invalidlength: "Introdu {count} cifre",
-        toomany: "Maxim {count} cifre permise"
+        toomany: "Maxim {count} cifre permise",
+        statsinfo: "Cifrele afișate în centru sunt cifre descoperite din cod, dar poziția lor în bara de statistici NU indică poziția lor în codul secret"
     }
 };
 
