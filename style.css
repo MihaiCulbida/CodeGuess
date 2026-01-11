@@ -712,70 +712,6 @@ body::before {
     flex-shrink: 0;
 }
 
-.notes-textarea {
-    width: 100%;
-    min-height: 250px;
-    padding: 16px;
-    border: 3px solid #e8edff;
-    border-radius: 16px;
-    font-family: inherit;
-    font-size: 15px;
-    resize: vertical;
-    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
-    transition: all 0.3s;
-}
-
-.notes-textarea:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-    background: white;
-}
-
-.floating-notes {
-    display: none;
-    position: fixed;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    width: 300px;
-    z-index: 1500;
-    border: 3px solid #667eea;
-}
-
-.floating-notes.active {
-    display: block;
-}
-
-.floating-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    transition: all 0.2s;
-}
-
-.floating-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.notes-content {
-    padding: 12px;
-}
-
-.notes-textarea {
-    min-height: 200px;
-    margin: 0;
-}
-
 .difficulty-attempts {
     font-size: 16px;
     font-weight: 700;
@@ -817,7 +753,7 @@ body::before {
 
 .floating-content {
     padding: 8px;
-    max-height: 300px;
+    max-height: 800px;
     overflow-y: auto;
 }
 
@@ -905,11 +841,11 @@ body::before {
 }
 
 .keyboard-zero {
-    width: 80px;
+    width: 50px;
 }
 
 .keyboard-backspace {
-    width: 75px;
+    width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -927,6 +863,25 @@ body::before {
 
 #keyboardBtn.active {
     display: flex;
+}
+
+.keyboard-submit {
+    width: 50px; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.keyboard-submit:hover {
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.keyboard-submit img {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
 }
 
 .confetti {
@@ -1174,8 +1129,8 @@ body::before {
     }
     
     .submit-btn img {
-        width: 22px;
-        height: 22px;
+        width: 28px;
+        height: 28px;
     }
     
     .stat-value {
@@ -1199,7 +1154,7 @@ body::before {
     
     .floating-content {
         padding: 6px;
-        max-height: 250px;
+        max-height: 650px;
     }
     
     .history-item {
@@ -1298,8 +1253,8 @@ body::before {
     }
     
     .submit-btn img {
-        width: 20px;
-        height: 20px;
+        width: 28px;
+        height: 28px;
     }
 
         .floating-history {
@@ -1313,7 +1268,7 @@ body::before {
     
     .floating-content {
         padding: 5px;
-        max-height: 220px;
+        max-height: 650px;
     }
     
     .history-item {
@@ -1384,8 +1339,8 @@ body::before {
     }
     
     .submit-btn img {
-        width: 18px;
-        height: 18px;
+        width: 28px;
+        height: 28px;
     }
     
     .stat-value {
@@ -1416,7 +1371,7 @@ body::before {
     
     .floating-content {
         padding: 4px;
-        max-height: 200px;
+        max-height: 650px;
     }
     
     .history-item {

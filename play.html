@@ -22,10 +22,6 @@
             <img src="img/keyboard.png" alt="Keyboard">
         </button>
 
-        <button class="icon-btn" id="notesBtn">
-            <img src="img/notes.png" alt="Notes">
-        </button>
-
         <button class="icon-btn" id="helpBtn">
             <img src="img/help.png" alt="Help">
         </button>
@@ -97,7 +93,6 @@
         </div>
     </div>
 
-
             <div class="input-area">
                 <input type="text" class="code-input" id="codeInput" data-i18n-placeholder="entercode">
                 <button class="submit-btn" id="submitBtn">
@@ -150,16 +145,6 @@
         </div>
     </div>
 
-    <div class="floating-notes" id="floatingNotes">
-        <div class="floating-header" id="notesHeader">
-            <span data-i18n="notes">Notes</span>
-            <button class="floating-close" id="closeNotes">✕</button>
-        </div>
-        <div class="notes-content">
-            <textarea class="notes-textarea" id="notesTextarea" data-i18n-placeholder="notesplaceholder"></textarea>
-        </div>
-    </div>
-
     <div class="modal result-modal" id="resultModal">
         <div class="modal-content">
             <div class="result-icon" id="resultIcon"></div>
@@ -205,8 +190,11 @@
         </div>
         <div class="keyboard-row">
             <button class="keyboard-key keyboard-zero">0</button>
-                <button class="keyboard-key keyboard-backspace" id="keyboardBackspace">
+            <button class="keyboard-key keyboard-backspace" id="keyboardBackspace">
                 <img src="img/backspace.png" alt="Backspace">
+            </button>
+            <button class="keyboard-key keyboard-submit" id="keyboardSubmit">
+                <img src="img/submit.png" alt="Submit">
             </button>
         </div>
     </div>
