@@ -23,8 +23,6 @@ const translations = {
         easy: "Easy",
         medium: "Medium",
         hard: "Hard",
-        notes: "Notes",
-        notesplaceholder: "Write..",
         attemptstext: "attempts",
         confirmback: "Are you sure?",
         confirmbacktext: "Do you want to exit the game?",
@@ -59,8 +57,6 @@ const translations = {
         easy: "Легко",
         medium: "Средне",
         hard: "Сложно",
-        notes: "Заметки",
-        notesplaceholder: "Напишите..",
         attemptstext: "попыток",
         confirmback: "Вы уверены?",
         confirmbacktext: "Хотите выйти из игры?",
@@ -96,8 +92,6 @@ const translations = {
         easy: "Ușor",
         medium: "Mediu",
         hard: "Dificil",
-        notes: "Notițe",
-        notesplaceholder: "Scrie..",
         attemptstext: "încercări",
         confirmback: "Ești sigur?",
         confirmbacktext: "Vrei să ieși din joc?",
@@ -518,104 +512,6 @@ document.getElementById('closeHelp').addEventListener('click', () => {
     document.getElementById('helpModal').classList.remove('active');
 });
 
-document.getElementById('closeNotes').addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.getElementById('floatingNotes').classList.remove('active');
-    document.getElementById('notesBtn').querySelector('img').src = 'img/notes.png';
-});
-
-let notesXOffset = 0;
-let notesYOffset = 0;
-let notesCurrentX = 0;
-let notesCurrentY = 0;
-
-document.getElementById('notesBtn').addEventListener('click', () => {
-    const floating = document.getElementById('floatingNotes');
-    const notesBtn = document.getElementById('notesBtn');
-    const notesImg = notesBtn.querySelector('img');
-    
-    if (floating.classList.contains('active')) {
-        floating.classList.remove('active');
-        notesImg.src = 'img/notes.png';
-    } else {
-        const container = document.querySelector('.container');
-        const containerRect = container.getBoundingClientRect();
-        
-        const finalTop = containerRect.top + (containerRect.height / 2) - 150;
-        const finalLeft = containerRect.left + (containerRect.width / 2) - 150;
-        
-        floating.style.top = finalTop + 'px';
-        floating.style.left = finalLeft + 'px';
-        floating.style.transform = 'translate3d(0px, 0px, 0)';
-        
-        notesXOffset = 0;
-        notesYOffset = 0;
-        notesCurrentX = 0;
-        notesCurrentY = 0;
-        
-        floating.classList.add('active');
-        notesImg.src = 'img/close.png';
-    }
-});
-
-const notesHeader = document.getElementById('notesHeader');
-let isDraggingNotes = false;
-let notesInitialX;
-let notesInitialY;
-
-notesHeader.addEventListener("mousedown", (e) => {
-    e.preventDefault();
-    notesInitialX = e.clientX - notesXOffset;
-    notesInitialY = e.clientY - notesYOffset;
-    isDraggingNotes = true;
-});
-
-notesHeader.addEventListener("touchstart", (e) => {
-    notesInitialX = e.touches[0].clientX - notesXOffset;
-    notesInitialY = e.touches[0].clientY - notesYOffset;
-    isDraggingNotes = true;
-}, false);
-
-document.addEventListener("mousemove", (e) => {
-    if (isDraggingNotes) {
-        e.preventDefault();
-        notesCurrentX = e.clientX - notesInitialX;
-        notesCurrentY = e.clientY - notesInitialY;
-        notesXOffset = notesCurrentX;
-        notesYOffset = notesCurrentY;
-        document.getElementById('floatingNotes').style.transform = `translate3d(${notesCurrentX}px, ${notesCurrentY}px, 0)`;
-    }
-});
-
-document.addEventListener(
-    "touchmove",
-    (e) => {
-        if (isDraggingNotes) {
-            e.preventDefault();
-            notesCurrentX = e.touches[0].clientX - notesInitialX;
-            notesCurrentY = e.touches[0].clientY - notesInitialY;
-            notesXOffset = notesCurrentX;
-            notesYOffset = notesCurrentY;
-            document.getElementById('floatingNotes').style.transform =
-                `translate3d(${notesCurrentX}px, ${notesCurrentY}px, 0)`;
-        }
-    },
-    { passive: false } 
-);
-
-
-document.addEventListener("mouseup", () => {
-    notesInitialX = notesCurrentX;
-    notesInitialY = notesCurrentY;
-    isDraggingNotes = false;
-});
-
-document.addEventListener("touchend", () => {
-    notesInitialX = notesCurrentX;
-    notesInitialY = notesCurrentY;
-    isDraggingNotes = false;
-}, false);
-
 document.getElementById('playAgain').addEventListener('click', () => {
     document.getElementById('resultModal').classList.remove('active');
     document.getElementById('gameArea').classList.remove('active');
@@ -626,8 +522,6 @@ document.getElementById('playAgain').addEventListener('click', () => {
     document.getElementById('keyboardBtn').querySelector('img').src = 'img/keyboard.png';
     document.getElementById('floatingHistory').classList.remove('active');
     document.getElementById('historyBtn').querySelector('img').src = 'img/open.png'; 
-    document.getElementById('floatingNotes').classList.remove('active');
-    document.getElementById('notesBtn').querySelector('img').src = 'img/notes.png';
     document.getElementById('menuSelector').classList.add('active');
     guessHistory = [];
     updateHistoryDisplay();
@@ -648,8 +542,6 @@ document.getElementById('confirmBackYes').addEventListener('click', () => {
     document.getElementById('keyboardBtn').querySelector('img').src = 'img/keyboard.png';
     document.getElementById('floatingHistory').classList.remove('active');
     document.getElementById('historyBtn').querySelector('img').src = 'img/open.png'; 
-    document.getElementById('floatingNotes').classList.remove('active');
-    document.getElementById('notesBtn').querySelector('img').src = 'img/notes.png';
     document.getElementById('menuSelector').classList.add('active');
     gameActive = false;
     guessHistory = [];
@@ -863,6 +755,10 @@ const stopBackspace = () => {
     }
 };
 
+document.getElementById('keyboardSubmit').addEventListener('click', () => {
+    document.getElementById('submitBtn').click();
+});
+
 const backspaceBtn = document.getElementById('keyboardBackspace');
 backspaceBtn.addEventListener('mousedown', startBackspace);
 backspaceBtn.addEventListener('mouseup', stopBackspace);
@@ -870,3 +766,4 @@ backspaceBtn.addEventListener('mouseleave', stopBackspace);
 backspaceBtn.addEventListener('touchstart', startBackspace);
 backspaceBtn.addEventListener('touchend', stopBackspace);
 backspaceBtn.addEventListener('touchcancel', stopBackspace);
+
