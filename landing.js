@@ -55,10 +55,15 @@
             }
         };
 
-        let currentLang = 'en';
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentLang = urlParams.get('lang') || localStorage.getItem('selectedLang') || 'en';
+        if (urlParams.get('lang')) {
+            localStorage.setItem('selectedLang', urlParams.get('lang'));
+        }
 
         function setLanguage(lang) {
             currentLang = lang;
+            localStorage.setItem('selectedLang', lang);
             const t = translations[lang];
             
             document.getElementById('currentLang').textContent = t.currentLang;
@@ -106,4 +111,12 @@
 
         document.getElementById('startGameBtn').addEventListener('click', () => {
             window.location.href = `play.html?lang=${currentLang}`;
+        });
+
+        setLanguage(currentLang);
+        document.querySelectorAll('.lang-option').forEach(opt => {
+            opt.classList.remove('selected');
+            if (opt.getAttribute('data-lang') === currentLang) {
+                opt.classList.add('selected');
+            }
         });
