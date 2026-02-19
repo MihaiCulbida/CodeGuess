@@ -1388,3 +1388,15 @@ body::before {
         border-radius: 5px;
     }
 }
+
+@media (min-width: 769px) {
+    #historyBtn,
+    #keyboardBtn {
+        display: none !important;
+    }
+    
+    #floatingHistory,
+    #floatingKeyboard {
+        display: none !important;
+    }
+}

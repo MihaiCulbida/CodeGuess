@@ -112,7 +112,6 @@ let initialX;
 let initialY;
 let xOffset = 0;
 let yOffset = 0;
-let currentLang = 'en';
 let secretCode = [];
 let maxAttempts = 6;
 let currentAttempts = 0;
@@ -122,8 +121,15 @@ let selectedMode = 0;
 let discoveredNumbers = new Set();
 let allNumbersFound = new Set();
 
+const urlParams = new URLSearchParams(window.location.search);
+let currentLang = urlParams.get('lang') || localStorage.getItem('selectedLang') || 'en';
+if (urlParams.get('lang')) {
+    localStorage.setItem('selectedLang', urlParams.get('lang'));
+}
+
 function setLanguage(lang) {
     currentLang = lang;
+    localStorage.setItem('selectedLang', lang);
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         el.textContent = translations[lang][key];
@@ -619,8 +625,6 @@ floatingHistory.addEventListener("mousedown", dragStart, false);
 document.addEventListener("mouseup", dragEnd, false);
 document.addEventListener("mousemove", drag, false);
 
-setLanguage('en');
-
 let keyboardXOffset = 0;
 let keyboardYOffset = 0;
 let keyboardCurrentX = 0;
@@ -767,3 +771,10 @@ backspaceBtn.addEventListener('touchstart', startBackspace);
 backspaceBtn.addEventListener('touchend', stopBackspace);
 backspaceBtn.addEventListener('touchcancel', stopBackspace);
 
+setLanguage(currentLang);
+document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.remove('selected');
+    if (opt.getAttribute('data-lang') === currentLang) {
+        opt.classList.add('selected');
+    }
+});
