@@ -31,7 +31,7 @@ const translations = {
         duplicate: "All numbers must be unique",
         invalidlength: "Enter {count} numbers",
         toomany: "Maximum {count} numbers allowed",
-        statsinfo: "The numbers shown in the middle are discovered numbers from the code, but their position in the stats bar does NOT indicate their position in the secret code"
+        statsinfo: "The numbers displayed in the middle (stats bar) represent the numbers written in the last code input."
     },
     ru: {
         title: "CodeGuess",
@@ -65,7 +65,7 @@ const translations = {
         duplicate: "Все цифры должны быть уникальными",
         invalidlength: "Введите {count} цифры",
         toomany: "Максимум {count} цифр разрешено",
-        statsinfo: "Цифры в центре это найденные цифры из кода, но их позиция в строке статистики НЕ указывает на их позицию в секретном коде"
+        statsinfo: "Цифры, отображаемые посередине (в строке статистики), представляют собой цифры, введенные в последнем блоке кода."
     },
     ro: {
         title: "CodeGuess",
@@ -100,7 +100,7 @@ const translations = {
         duplicate: "Toate cifrele trebuie să fie unice",
         invalidlength: "Introdu {count} cifre",
         toomany: "Maxim {count} cifre permise",
-        statsinfo: "Cifrele afișate în centru sunt cifre descoperite din cod, dar poziția lor în bara de statistici NU indică poziția lor în codul secret "
+        statsinfo: "Numerele afișate în mijloc (bara de statistici) reprezintă numerele scrise în ultima intrare a codului."
     }
 };
 
@@ -192,30 +192,32 @@ function updateDiscoveredNumbers() {
     const container = document.getElementById('discoveredNumbers');
     container.innerHTML = '';
     
-    const correctNumbers = Array.from(discoveredNumbers);
-    const presentNumbers = Array.from(allNumbersFound);
-    const totalFound = correctNumbers.length + presentNumbers.length;
-    
-    correctNumbers.forEach((number) => {
-        const cell = document.createElement('div');
-        cell.className = 'discovered-cell found';
-        cell.textContent = number;
-        container.appendChild(cell);
-    });
-    
-    presentNumbers.forEach((number) => {
-        const cell = document.createElement('div');
-        cell.className = 'discovered-cell present';
-        cell.textContent = number;
-        container.appendChild(cell);
-    });
-    
-    for (let i = totalFound; i < gameMode; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'discovered-cell empty';
-        cell.textContent = '?';
-        container.appendChild(cell);
+    if (guessHistory.length === 0) {
+        for (let i = 0; i < gameMode; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'discovered-cell empty';
+            cell.textContent = '?';
+            container.appendChild(cell);
+        }
+        return;
     }
+    
+    const lastGuess = guessHistory[guessHistory.length - 1];
+    
+    lastGuess.guess.split('').forEach((num, idx) => {
+        const cell = document.createElement('div');
+        if (lastGuess.feedback[idx] === 'correct') {
+            cell.className = 'discovered-cell found';
+            cell.textContent = num;
+        } else if (lastGuess.feedback[idx] === 'present') {
+            cell.className = 'discovered-cell present';
+            cell.textContent = num;
+        } else {
+            cell.className = 'discovered-cell empty';
+            cell.textContent = '?';
+        }
+        container.appendChild(cell);
+    });
 }
 
 function startGame(mode, difficulty) {
