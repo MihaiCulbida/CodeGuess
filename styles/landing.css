@@ -4,6 +4,9 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overscroll-behavior: none;
+}
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     min-height: 100dvh;
