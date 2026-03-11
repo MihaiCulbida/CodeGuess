@@ -6,6 +6,7 @@
 
 html, body {
     overscroll-behavior: none;
+    background: #6b6bbd;
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -54,6 +55,7 @@ body {
     z-index: 10;
     display: flex;
     flex-direction: column;
+    min-height: 100dvh;
 }
 
 .header {
