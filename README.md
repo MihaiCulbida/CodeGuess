@@ -33,3 +33,6 @@ Responsive Design - Works on desktop, tablet, and mobile
  Русский
 
 Language is saved to localStorage and persists across sessions.
+
+# How to use
+Try it directly in your browser - open deployments and access the last link or go directly here https://codeguess-game.vercel.app/
