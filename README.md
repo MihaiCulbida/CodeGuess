@@ -1,2 +1,4 @@
 # CodeGuess
-Code Guess is a logic puzzle game where players must uncover a hidden numerical code. Choose between 3, 4, 5 or 6 number modes, and select your difficulty level: easy, medium, or hard, each offering different amounts of attempts. Each round generates a random code with unique numbers. After every guess, feedback helps you find the correct code using logic and deduction.
+CodeGuess is a browser-based puzzle game where players must deduce a hidden numerical code using logic and elimination. Each round generates a random code made up of unique digits, and players receive color-coded feedback after every guess to guide them toward the solution.
+
+No sign-up. No ads. Completely free to play.
