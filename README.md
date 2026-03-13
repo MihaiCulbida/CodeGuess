@@ -34,5 +34,5 @@ Responsive Design - Works on desktop, tablet, and mobile
 
 Language is saved to localStorage and persists across sessions.
 
-# How to use
+# How to play
 Try it directly in your browser - open deployments and access the last link or go directly here https://codeguess-game.vercel.app/
