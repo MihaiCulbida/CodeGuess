@@ -26,11 +26,11 @@ Responsive Design - Works on desktop, tablet, and mobile
    - On 5 digits, Easy gives 8 attempts, Medium 6, and Hard 4.
    - On 6 digits, Easy gives 10, Medium 8, and Hard 6.
 # Supported Languages
- English
+- English
  
- Română
+- Română
  
- Русский
+- Русский
 
 Language is saved to localStorage and persists across sessions.
 
